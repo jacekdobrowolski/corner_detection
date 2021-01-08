@@ -1,29 +1,36 @@
-# python version 3.5 or greater required
+"""
+FAST
+***********************
 
+Corner detection using FAST method.
+"""
 import numpy as np
 
-def CornerDetection( image: np.ndarray, threshold: int, n: int):
+
+def FAST(image: np.ndarray, threshold: int, n: int):
     """Finds good corners in grayscale image, using FAST method.
 
     Args:
         image (np.ndarray): Grayscale image in form of 2 dimensional np.ndarray
         threshold (int): Threshold value.
-        n (int): Number of pixels on circle around candidate corner with value difference greater than threshold.
+        n (int): Number of pixels on circle around candidate corner with value
+                    difference greater than threshold.
 
     Returns:
-        corners: List of tuples containing indexes of good corners
+        list: List of tuples containing indexes of good corners
     """
-    assert isinstance(image, np.ndarray) and image.ndim == 2, 'image must be grayscale image, np.ndarray'
+    assert isinstance(image, np.ndarray) and image.ndim == 2, \
+        'image must be grayscale image, np.ndarray'
     # assert isinstance(radius, int), 'radius must be integer'
 
     corners = list()
 
     # arc list
-    arcList = [(-1,3),  (0,3),  (1,3),
-               (-1,-3), (0,-3), (1,-3),
-               (3,-1),  (3,0),  (3,1),
-               (-3,-1), (-3,0), (-3,1),
-               (2,2),   (2,-2), (-2,2), (-2,-2)]
+    arcList = [(-1, 3),  (0, 3), (1, 3),
+               (-1, -3), (0, -3), (1, -3),
+               (3, -1),  (3, 0),  (3, 1),
+               (-3, -1), (-3, 0), (-3, 1),
+               (2, 2),   (2, -2), (-2, 2),  (-2, -2)]
     radius = 3
 
     for x in range(radius, image.shape[0] - radius):
@@ -33,7 +40,7 @@ def CornerDetection( image: np.ndarray, threshold: int, n: int):
             brighter_count = 0
 
             for arcX, arcY in arcList:
-                diff = int(image[x,y]) - int(image[x + arcX, y + arcY])
+                diff = int(image[x, y]) - int(image[x + arcX, y + arcY])
                 if diff > threshold:
                     darker_count += 1
                 elif diff < -threshold:

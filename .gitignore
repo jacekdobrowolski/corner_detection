@@ -6,7 +6,6 @@
 #build and release folders
 */CMakeFiles
 */CMakeCache.txt
-*/Makefile
 */cmake_install.cmake
 .DS_Store
 
@@ -163,6 +162,7 @@ pyvenv.cfg
 pip-selfcheck.json
 
 ### vscode ###
+.vscode
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
