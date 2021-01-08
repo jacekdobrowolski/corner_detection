@@ -1,5 +1,5 @@
-from corner_detection.fast import FAST
 import pytest
+from corner_detection.fast import FAST
 import cv2
 import numpy as np
 
