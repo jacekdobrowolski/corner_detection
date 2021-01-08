@@ -156,15 +156,18 @@
 <h1>TITLE<a class="headerlink" href="#title" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
 <dt id="corner_detection.fast.FAST">
-<code class="sig-prename descclassname">corner_detection.fast.</code><code class="sig-name descname">FAST</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">threshold</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">n</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span><a class="headerlink" href="#corner_detection.fast.FAST" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">corner_detection.fast.</code><code class="sig-name descname">FAST</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">radius</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">threshold</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">n</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span><a class="headerlink" href="#corner_detection.fast.FAST" title="Permalink to this definition">¶</a></dt>
 <dd><p>Finds good corners in grayscale image, using FAST method.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>image</strong> (<em>np.ndarray</em>) – Grayscale image in form of 2 dimensional np.ndarray</p></li>
+<li><p><strong>radius</strong> (<em>int</em>) – radius of a circle around candidate corner.
+Must be greater or equals 1.</p></li>
 <li><p><strong>threshold</strong> (<em>int</em>) – Threshold value.</p></li>
-<li><p><strong>n</strong> (<em>int</em>) – Number of pixels on circle around candidate corner with value
-difference greater than threshold.</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – Fraction of pixels on circle around candidate corner with
+value difference greater than threshold.
+Must be between 0 and 1.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
