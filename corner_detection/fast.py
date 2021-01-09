@@ -25,9 +25,7 @@ def _generate_ring(radius: int):
             min_value = 1.0
             for y in range(1, radius + 1):
                 value = abs(((x**2 + y**2) / radius**2) - 1)
-                # print(x, y, value, min_value)
                 if min_value > value:
-                    # print("found min")
                     min_value = value
                     min_x, min_y = x, y
             ring.add((min_x, min_y))
@@ -48,12 +46,6 @@ def _generate_ring(radius: int):
     for x, y in temp_ring:
         ring.add((-x, -y))
 
-    a = np.zeros((radius*2+1, radius*2+1))
-    for x, y in ring:
-        a[radius+x, radius+y] = 1
-
-    print(a)
-
     return ring
 
 
@@ -66,9 +58,8 @@ def FAST(image: np.ndarray, radius: int, threshold: int, n: float):
         radius (:class:`int`): Radius of a ring around candidate corner.
                                     Must be greater or equals to 1.
         threshold (:class:`int`): Threshold value.
-        n (:class:`int`): Fraction of pixels on ring around candidate corner with
-                    value difference greater than threshold.
-                    Must be between 0 and 1.
+        n (:class:`int`): Fraction of pixels on ring around candidate corner
+        with value difference greater than threshold. Must be between 0 and 1.
 
     Returns:
         List of tuples containing indexes of good corners
