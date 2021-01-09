@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>TITLE &mdash; Corner detection and OpticalFlow 0.1 documentation</title>
+  <title>FAST corner detection method &mdash; Corner detection and OpticalFlow 0.1 documentation</title>
   
 
   
@@ -84,7 +84,7 @@
             
             
               <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">TITLE</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">FAST corner detection method</a></li>
 </ul>
 
             
@@ -133,7 +133,7 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>TITLE</li>
+      <li>FAST corner detection method</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -152,29 +152,26 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="title">
-<h1>TITLE<a class="headerlink" href="#title" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="fast-corner-detection-method">
+<h1>FAST corner detection method<a class="headerlink" href="#fast-corner-detection-method" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
-<dt id="corner_detection.fast.FAST">
-<code class="sig-prename descclassname">corner_detection.fast.</code><code class="sig-name descname">FAST</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">radius</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">threshold</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">n</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span><a class="headerlink" href="#corner_detection.fast.FAST" title="Permalink to this definition">¶</a></dt>
+<dt id="corner_detection.FAST">
+<code class="sig-prename descclassname">corner_detection.</code><code class="sig-name descname">FAST</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">radius</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">threshold</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">n</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span><a class="headerlink" href="#corner_detection.FAST" title="Permalink to this definition">¶</a></dt>
 <dd><p>Finds good corners in grayscale image, using FAST method.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>image</strong> (<em>np.ndarray</em>) – Grayscale image in form of 2 dimensional np.ndarray</p></li>
-<li><p><strong>radius</strong> (<em>int</em>) – radius of a circle around candidate corner.
-Must be greater or equals 1.</p></li>
-<li><p><strong>threshold</strong> (<em>int</em>) – Threshold value.</p></li>
-<li><p><strong>n</strong> (<em>int</em>) – Fraction of pixels on circle around candidate corner with
-value difference greater than threshold.
-Must be between 0 and 1.</p></li>
+<li><p><strong>image</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code>) – Grayscale image in form of 2 dimensional
+<code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code></p></li>
+<li><p><strong>radius</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Radius of a ring around candidate corner.
+Must be greater or equals to 1.</p></li>
+<li><p><strong>threshold</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Threshold value.</p></li>
+<li><p><strong>n</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Fraction of pixels on ring around candidate corner</p></li>
+<li><p><strong>value difference greater than threshold. Must be between 0 and 1.</strong> (<em>with</em>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>List of tuples containing indexes of good corners</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>list</p>
 </dd>
 </dl>
 </dd></dl>
