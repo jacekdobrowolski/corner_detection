@@ -6,10 +6,12 @@
 Welcome to Corner detection and OpticalFlow's documentation!
 ============================================================
 
+
+
 .. toctree::
+   corner_detection
    :maxdepth: 2
 
-   corner_detection
 
 
 Indices and tables

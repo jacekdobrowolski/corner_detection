@@ -9,14 +9,14 @@ import numpy as np
 
 def _generate_ring(radius: int):
     """Generates list of relative coordinates of
-            a one pixel wide ring of a given radius.
+    a one pixel wide ring of a given radius.
 
     Args:
-        radius (:class`int`): Radius of a ring to be generated.
+        radius (:class:`int`): Radius of a ring to be generated.
 
     Returns:
         Returns list of tuples containing coordinates,
-                                    relative to center, of pixels on the ring.
+        relative to center, of pixels on the ring.
     """
     ring = set()
     ring.add((radius, 0))
@@ -59,7 +59,8 @@ def FAST(image: np.ndarray, radius: int, threshold: int, n: float):
                                     Must be greater or equals to 1.
         threshold (:class:`int`): Threshold value.
         n (:class:`int`): Fraction of pixels on ring around candidate corner
-        with value difference greater than threshold. Must be between 0 and 1.
+            with absolute value difference greater than threshold.
+            Must be between 0 and 1.
 
     Returns:
         List of tuples containing indexes of good corners
