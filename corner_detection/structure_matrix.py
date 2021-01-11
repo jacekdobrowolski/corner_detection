@@ -32,17 +32,19 @@ def structure_matrix(image: np.ndarray,
 
 def shi_tomasi(image: np.ndarray, operator: np.ndarray, window: np.ndarray):
     structure = structure_matrix(image, operator, window)
+    result = np.empty(structure.shape[:2])
     for x in range(structure.shape[0]):
         for y in range(structure.shape[1]):
-            result = np.linalg.eigvals(structure[x, y]).min()
+            result[x, y] = np.linalg.eigvals(structure[x, y]).min()
     return result
 
 
 def harris(image: np.ndarray, operator: np.ndarray,
            window: np.ndarray, k: float):
     structure = structure_matrix(image, operator, window)
+    result = np.empty(structure.shape[:2])
     for x in range(structure.shape[0]):
         for y in range(structure.shape[1]):
             A = structure[x, y]
-            result = np.linalg.det(A) - k * (np.trace(A)**2)
+            result[x, y] = np.linalg.det(A) - k * (np.trace(A)**2)
     return result
