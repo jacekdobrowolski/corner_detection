@@ -187,9 +187,59 @@ Must be between 0 and 1.</p></li>
 </div>
 <div class="section" id="harris">
 <h2>Harris<a class="headerlink" href="#harris" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="corner_detection.harris">
+<code class="sig-prename descclassname">corner_detection.</code><code class="sig-name descname">harris</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">operator</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">window</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">k</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span><a class="headerlink" href="#corner_detection.harris" title="Permalink to this definition">¶</a></dt>
+<dd><p>Harris method implementation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code>) – Image in with corners are to be found.</p></li>
+<li><p><strong>operator</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code>) – Operator used for approximating
+image derivatives. For example: <code class="xref py py-class docutils literal notranslate"><span class="pre">filter_kernels.SOBEL</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">filter_kernels.SCHARR</span></code></p></li>
+<li><p><strong>window</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code>) – Window</p></li>
+<li><p><strong>k</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Constant determining algorithm sensitivity,
+usually  beetwen 0.04 and 0.15</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">image</span></code> sized array containing value
+coresponding to how good of a corner a given pixel is.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 <div class="section" id="shi-tomasi">
 <h2>Shi-Tomasi<a class="headerlink" href="#shi-tomasi" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="corner_detection.shi_tomasi">
+<code class="sig-prename descclassname">corner_detection.</code><code class="sig-name descname">shi_tomasi</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">operator</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">window</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em><span class="sig-paren">)</span><a class="headerlink" href="#corner_detection.shi_tomasi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shi-Tomasi method implementation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code>) – Image in with corners are to be found.</p></li>
+<li><p><strong>operator</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code>) – Operator used for approximating
+image derivatives. For example: <code class="xref py py-class docutils literal notranslate"><span class="pre">filter_kernels.SOBEL</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">filter_kernels.SCHARR</span></code></p></li>
+<li><p><strong>window</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code>) – Window</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">image</span></code> sized array containing value
+coresponding to how good of a corner a given pixel is.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 </div>
 
