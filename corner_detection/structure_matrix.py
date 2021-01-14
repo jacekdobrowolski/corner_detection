@@ -11,8 +11,8 @@ def calc_derivatives(image: np.ndarray,
     return derivative_x, derivative_y
 
 
-def structure_matrix(image: np.ndarray,
-                     operator: np.ndarray, window: np.ndarray):
+def generate_structure_matrix(image: np.ndarray,
+                              operator: np.ndarray, window: np.ndarray):
     Ix, Iy = calc_derivatives(image, operator)
     Ix2 = Ix**2
     Iy2 = Iy**2
@@ -28,23 +28,3 @@ def structure_matrix(image: np.ndarray,
     structure_second_row = np.stack((Ixy_local_sums, Iy2_local_sums), axis=2)
     structure = np.stack((structure_first_row, structure_second_row), axis=3)
     return structure
-
-
-def shi_tomasi(image: np.ndarray, operator: np.ndarray, window: np.ndarray):
-    structure = structure_matrix(image, operator, window)
-    result = np.empty(structure.shape[:2])
-    for x in range(structure.shape[0]):
-        for y in range(structure.shape[1]):
-            result[x, y] = np.linalg.eigvals(structure[x, y]).min()
-    return result
-
-
-def harris(image: np.ndarray, operator: np.ndarray,
-           window: np.ndarray, k: float):
-    structure = structure_matrix(image, operator, window)
-    result = np.empty(structure.shape[:2])
-    for x in range(structure.shape[0]):
-        for y in range(structure.shape[1]):
-            A = structure[x, y]
-            result[x, y] = np.linalg.det(A) - k * (np.trace(A)**2)
-    return result

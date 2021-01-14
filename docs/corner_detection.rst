@@ -10,6 +10,9 @@ FAST
 
 Harris
 ------------
+.. autofunction:: harris
+
 
 Shi-Tomasi
 ------------
+.. autofunction:: shi_tomasi
