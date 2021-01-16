@@ -15,7 +15,7 @@ def _generate_ring(radius: int):
         radius (:class:`int`): Radius of a ring to be generated.
 
     Returns:
-        Returns list of tuples containing coordinates,
+        Returns set of tuples containing coordinates,
         relative to center, of pixels on the ring.
     """
     ring = set()
@@ -63,7 +63,7 @@ def FAST(image: np.ndarray, radius: int, threshold: int, n: float):
             Must be between 0 and 1.
 
     Returns:
-        List of tuples containing indexes of good corners
+        Set of tuples containing indexes of good corners
     """
     assert isinstance(image, np.ndarray) and image.ndim == 2, \
         'image must be grayscale image, np.ndarray'
@@ -72,7 +72,7 @@ def FAST(image: np.ndarray, radius: int, threshold: int, n: float):
     assert n <= 1, 'n must be lesser or equal to 1'
     assert radius > 0, 'n must be greater than 0'
 
-    corners = list()
+    corners = set()
     ring = _generate_ring(radius)
     n = int(n*len(ring))
 
@@ -91,5 +91,5 @@ def FAST(image: np.ndarray, radius: int, threshold: int, n: float):
 
                 if darker_count > n or brighter_count > n:
                     # Good corner
-                    corners.append(tuple((y, x)))
+                    corners.add(tuple((y, x)))
     return corners

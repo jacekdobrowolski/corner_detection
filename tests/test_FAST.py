@@ -30,5 +30,5 @@ def test_corner_detection_fast_return_value():
 
     corners = corner_detection.FAST(lenna_gray, 3, 80, 0.8)
 
-    assert isinstance(corners, list)
-    assert isinstance(corners[0], tuple)
+    assert isinstance(corners, set)
+    assert isinstance(corners.pop(), tuple)

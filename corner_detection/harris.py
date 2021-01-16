@@ -7,7 +7,7 @@ def harris(image: np.ndarray, operator: np.ndarray,
     """Harris method implementation
 
     Args:
-        image (:class:`np.ndarray`): Image in with corners are to be found.
+        image (:class:`np.ndarray`): Image in which corners are to be found.
         operator (:class:`np.ndarray`): Operator used for approximating
             image derivatives. For example: :class:`filter_kernels.SOBEL`
             :class:`filter_kernels.SCHARR`
