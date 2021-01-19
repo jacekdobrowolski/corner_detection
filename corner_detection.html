@@ -38,6 +38,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Optical Flow" href="optical_flow.html" />
     <link rel="prev" title="Welcome to Corner detection and OpticalFlow’s documentation!" href="index.html" /> 
 </head>
 
@@ -90,6 +91,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#shi-tomasi">Shi-Tomasi</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="optical_flow.html">Optical Flow</a></li>
 </ul>
 
             
@@ -179,7 +181,7 @@ Must be between 0 and 1.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>List of tuples containing indexes of good corners</p>
+<dd class="field-even"><p>Set of tuples containing indexes of good corners</p>
 </dd>
 </dl>
 </dd></dl>
@@ -194,7 +196,7 @@ Must be between 0 and 1.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>image</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code>) – Image in with corners are to be found.</p></li>
+<li><p><strong>image</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code>) – Image in which corners are to be found.</p></li>
 <li><p><strong>operator</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code>) – Operator used for approximating
 image derivatives. For example: <code class="xref py py-class docutils literal notranslate"><span class="pre">filter_kernels.SOBEL</span></code>
 <code class="xref py py-class docutils literal notranslate"><span class="pre">filter_kernels.SCHARR</span></code></p></li>
@@ -223,7 +225,7 @@ coresponding to how good of a corner a given pixel is.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>image</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code>) – Image in with corners are to be found.</p></li>
+<li><p><strong>image</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code>) – Image in which corners are to be found.</p></li>
 <li><p><strong>operator</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code>) – Operator used for approximating
 image derivatives. For example: <code class="xref py py-class docutils literal notranslate"><span class="pre">filter_kernels.SOBEL</span></code>
 <code class="xref py py-class docutils literal notranslate"><span class="pre">filter_kernels.SCHARR</span></code></p></li>
@@ -249,6 +251,7 @@ coresponding to how good of a corner a given pixel is.</p>
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="optical_flow.html" class="btn btn-neutral float-right" title="Optical Flow" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="index.html" class="btn btn-neutral float-left" title="Welcome to Corner detection and OpticalFlow’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
