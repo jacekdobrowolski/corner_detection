@@ -12,10 +12,12 @@ def lucas_kanade(previous: np.ndarray, current: np.ndarray,
         features (:class:`set`): Set of features to track.
         window_size (:class:`int`): Size of window around feature,
             in which optical flow will be calculated.
-        operator (:class:`np.ndarray`): Derivative operator like Scharr or Sobel.
+        operator (:class:`np.ndarray`): Derivative operator like
+            Scharr or Sobel.
 
     Returns:
-        List of tuples containing feature coordinates and calculated transition vector.
+        List of tuples containing feature coordinates and
+        calculated transition vector.
     """
     assert window_size % 2 == 1, 'window_size must be odd'
     assert isinstance(previous, np.ndarray) and previous.ndim == 2, \
@@ -26,18 +28,18 @@ def lucas_kanade(previous: np.ndarray, current: np.ndarray,
     result = list()
 
     for x, y in features:
-        current_window = current[x-window_radius:x+window_radius,
-                                 y-window_radius:y+window_radius]
-        previous_window = previous[x-window_radius:x+window_radius,
-                                   y-window_radius:y+window_radius]
+        current_window = current[x-window_radius:x + window_radius,
+                                 y-window_radius:y + window_radius]
+        previous_window = previous[x-window_radius:x + window_radius,
+                                   y-window_radius:y + window_radius]
         Ix = scipy.signal.convolve2d(current_window,
                                      operator, mode='valid')
         Iy = scipy.signal.convolve2d(current_window,
                                      np.rot90(operator), mode='valid')
         It = current_window - previous_window
-        It = It[1:-1,1:-1].flatten()
+        It = It[1:-1, 1:-1].flatten()
         A = np.stack((Ix.flatten(), Iy.flatten()), axis=1)
 
-        result.append((x, y, *np.linalg.lstsq(A,It)[0]))
-    
+        result.append((x, y, *np.linalg.lstsq(A, It)[0]))
+
     return result
