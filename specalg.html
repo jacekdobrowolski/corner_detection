@@ -1,0 +1,440 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Specyfikacja Algorytmiczna &mdash; Corner detection and OpticalFlow 0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Corner detection methods" href="corner_detection.html" />
+    <link rel="prev" title="Welcome to Corner detection and OpticalFlow’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Corner detection and OpticalFlow
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Specyfikacja Algorytmiczna</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#funkcjonalnosc">Funkcjonalność</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dane-wejsciowe">Dane wejściowe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dane-wyjsciowe">Dane wyjściowe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#narzedzia">Narzędzia</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#wykrywanie-dobrych-punktow-do-sledzenia-w-obrazie">Wykrywanie dobrych punktów do śledzenia w obrazie</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#harris-stephens">Harris-Stephens</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#shi-tomasi">Shi-Tomasi</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#metoda-fast">Metoda FAST</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#estymacja-przesuniecia-sledzonych-naroznikow">Estymacja przesunięcia śledzonych narożników</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#problem-przeslony">Problem przesłony</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#piramidy-i-iteracje">Piramidy i iteracje</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#badanie-dzialania-algorytmow">Badanie działania algorytmów</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dalszy-rozwoj-projektu">Dalszy rozwój projektu</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="corner_detection.html">Corner detection methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="optical_flow.html">Optical Flow</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Corner detection and OpticalFlow</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Specyfikacja Algorytmiczna</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/specalg.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="specyfikacja-algorytmiczna">
+<h1>Specyfikacja Algorytmiczna<a class="headerlink" href="#specyfikacja-algorytmiczna" title="Permalink to this headline">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Autor</dt>
+<dd class="field-odd"><p>Jacek Ambroży Dobrowolski</p>
+</dd>
+<dt class="field-even">Data</dt>
+<dd class="field-even"><p>18 Grudzień 2020</p>
+</dd>
+</dl>
+<div class="section" id="funkcjonalnosc">
+<h2>Funkcjonalność<a class="headerlink" href="#funkcjonalnosc" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Wykrywanie dobrych punktów do śledzenia w obrazie</p></li>
+<li><p>Odnajdowanie przesunięcia śledzonych narożników</p></li>
+</ul>
+</div>
+<div class="section" id="dane-wejsciowe">
+<h2>Dane wejściowe<a class="headerlink" href="#dane-wejsciowe" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Nagranie wideo</p></li>
+<li><p>Parametry wybierane z poziomu aplikacji</p></li>
+</ul>
+</div>
+<div class="section" id="dane-wyjsciowe">
+<h2>Dane wyjściowe<a class="headerlink" href="#dane-wyjsciowe" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Strumień wideo z naniesionymi punktami i ich wektorami ruchu</p></li>
+<li><p>Podgląd działania poszczególnych etapów przetwarzania</p></li>
+</ul>
+</div>
+<div class="section" id="narzedzia">
+<h2>Narzędzia<a class="headerlink" href="#narzedzia" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Python</p></li>
+<li><p>NumPy</p></li>
+<li><p>OpenCV</p></li>
+</ul>
+<div class="section" id="wykrywanie-dobrych-punktow-do-sledzenia-w-obrazie">
+<h3>Wykrywanie dobrych punktów do śledzenia w obrazie<a class="headerlink" href="#wykrywanie-dobrych-punktow-do-sledzenia-w-obrazie" title="Permalink to this headline">¶</a></h3>
+<p>Do wykrywania narożników w obrazie można wykorzystać różne metody.
+Najbardziej popularne są Harrisa-Stephens:raw-latex:<cite>cite{Harris}</cite> i
+Shi-Tomasi:raw-latex:<cite>cite{Shi-Tomasi}</cite>, są one do siebie podobnę i
+część algorytmu jest wspólna. Obie metody zakładają że narożnik to punkt
+obrazu w którym intensywność zmienia się w więcej niż dwóch kierunkach.
+Zmiana w jednym kierunku oznacza krawędź. Niech <span class="math notranslate nohighlight">\(I(x, y)\)</span> równa
+się intensywności pixela o koordynatach x i y. <span class="math notranslate nohighlight">\(I(x + u, y + v)\)</span>
+równa się intensywności pixela odległego o u i v od poprzedniego.
+Narożnik znajdzie się się więc w punkcie gdzie suma kwadratów różnic
+między tymi wartościami będzie największa. Co można zapisać jako</p>
+<div class="math notranslate nohighlight">
+\[S(x,y) = \Sigma_{u}\Sigma_{v}w(u, v)[I(x + u, y + v) - I(x, y)]^2\]</div>
+<p>gdzie <span class="math notranslate nohighlight">\(w(u, v)\)</span> to funkcja okna przesuwanego po obrazie,
+zwracająca wartość jeden dla małego obszaru i zero dla reszty. Obszarem
+do zbadania jest działanie innych okien okrągłych, niebinarnych. To
+równanie możemy przybliżyć wielomianem korzystając z twierdzenia
+Taylora. Niech <span class="math notranslate nohighlight">\(I_x\)</span> i <span class="math notranslate nohighlight">\(I_y\)</span> będą pochodnymi <span class="math notranslate nohighlight">\(I\)</span> tak
+aby <span class="math notranslate nohighlight">\(I(x + u, y + v) \approx I(u, v) + I_x(u, v)x + I_y(u, v)y\)</span>
+Daje to wielomian</p>
+<div class="math notranslate nohighlight">
+\[S(x, y) \approx \Sigma_u \Sigma_v w(u, v)(I_x(u, v)x+I_y(u,v)y)^2\]</div>
+<p>Zapisane w formie macierzowej:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}S(x, y) \approx
+        \begin{pmatrix}
+            x &amp; y
+        \end{pmatrix}
+        \mathbf{A}
+        \begin{pmatrix}
+            x \\
+            y \\
+        \end{pmatrix}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}{\displaystyle
+    A=\sum _{u}\sum _{v}w(u,v){
+        \begin{bmatrix}
+            I_{x}(u,v)^{2}&amp;I_{x}(u,v)I_{y}(u,v)\\
+            I_{x}(u,v)I_{y}(u,v)&amp;I_{y}(u,v)^{2}
+        \end{bmatrix}}={
+        \begin{bmatrix}
+            \langle I_{x}^{2}\rangle &amp;\langle I_{x}I_{y}\rangle \\
+            \langle I_{x}I_{y}\rangle &amp;\langle I_{y}^{2}\rangle
+        \end{bmatrix}}
+    }\end{split}\]</div>
+<p>Poprzez analizę wartości własnych macierzy <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> można
+znaleźć narożniki.</p>
+<ul class="simple">
+<li><p>Obie wartości są bliskie zeru dany pixel nie ma dobrych punktów do
+śledzenia</p></li>
+<li><p>Jedna z wartości własnych jest bliska zeru a druga ma duża wartość
+dany pixel znajduje się na krawędzi</p></li>
+<li><p>Obie wartości własne mają duże dodatnie wartości dany pixel jest
+narożnikiem</p></li>
+</ul>
+<p>W tym punkcie metody zaczynają się różnić.</p>
+<div class="section" id="harris-stephens">
+<h4>Harris-Stephens<a class="headerlink" href="#harris-stephens" title="Permalink to this headline">¶</a></h4>
+<p>Jako że wyznaczanie wartości własnych macierzy jest złożone
+obliczeniowo. Dlatego stosuje funkcje <span class="math notranslate nohighlight">\(M_c\)</span></p>
+<div class="math notranslate nohighlight">
+\[M_c = \lambda_1 \lambda_2 - \kappa \, (\lambda_1 + \lambda_2)^2
+            = \operatorname{det}(A) - \kappa \, \operatorname{trace}^2(A)\]</div>
+<p>Gdzie <span class="math notranslate nohighlight">\(\kappa\)</span> to stała wyznaczana empirycznie, która odpowiada sa
+czułość algorytmu. W literaturze można się spotkać z wartościami między
+<span class="math notranslate nohighlight">\(0.04\)</span> do <span class="math notranslate nohighlight">\(0.15\)</span>.</p>
+</div>
+<div class="section" id="shi-tomasi">
+<h4>Shi-Tomasi<a class="headerlink" href="#shi-tomasi" title="Permalink to this headline">¶</a></h4>
+<p>Metoda Shi-Tomasi bezpośrednio wyznacza <span class="math notranslate nohighlight">\(min(\lambda_1, lambda_2)\)</span>
+Co daje nieco lesze wyniki kosztem złożoności obliczeniowej.</p>
+</div>
+<div class="section" id="metoda-fast">
+<h4>Metoda FAST<a class="headerlink" href="#metoda-fast" title="Permalink to this headline">¶</a></h4>
+<p>Metoda FAST (Features from accelerated segment
+test):raw-latex:<cite>cite{FAST}</cite> polega na znalezieniu punktów dla których
+w danym promieniu. Znaczna część pixeli różni się od centralnego pixela
+o wartość progu detekcji. Zaletą tej metody jest niska złożoność
+obliczeniowa. Algorytm ten ma 3 parametry które można zbadać.</p>
+</div>
+</div>
+<div class="section" id="estymacja-przesuniecia-sledzonych-naroznikow">
+<h3>Estymacja przesunięcia śledzonych narożników<a class="headerlink" href="#estymacja-przesuniecia-sledzonych-naroznikow" title="Permalink to this headline">¶</a></h3>
+<p>Metoda Lucas-Kanade:raw-latex:<cite>cite{Lucas-Kanade}</cite> jest szeroko
+stosowana w wizji komputerowej. Polega na założeniu że ruch w sąsiednich
+pixeli przebiega w jednym kierunku. Jako metoda o działaniu lokalnym nie
+radzi sobie z wyznaczaniem ruchu dla regionów o jednakowej
+intensywności. Dlatego jako dane wejściowe podajemy dobre punkty do
+śledzenia. Metoda ta zakłada również nie wielki ruch między
+poszczególnymi klatkami. Wynikają z tego pewne ograniczenia takie jak
+słabe działanie dla szybkich obiektów lub konieczność szybszego
+próbkowania obrazu. Algorytm wyznacza wektor który najlepiej opisuje
+ruch danego wycinka obrazu.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{matrix}
+            I_{x}(q_{1})V_{x}+I_{y}(q_{1})V_{y}=-I_{t}(q_{1}) \\
+            I_{x}(q_{2})V_{x}+I_{y}(q_{2})V_{y}=-I_{t}(q_{2}) \\
+            \vdots  \\
+            I_{x}(q_{n})V_{x}+I_{y}(q_{n})V_{y}=-I_{t}(q_{n}) \\
+        \end{matrix}\end{split}\]</div>
+<p>Gdzie <span class="math notranslate nohighlight">\(V_x\)</span> to współrzędna pozioma wektora ruchu regionu a
+<span class="math notranslate nohighlight">\(V_y\)</span> to współrzędna pionowa tegoż wektora.
+<span class="math notranslate nohighlight">\(q_1, q_2, \dots q_n\)</span> to pixele wewnątrz regionu. A
+<span class="math notranslate nohighlight">\(I_{x}(q_{i}),I_{y}(q_{i}),I_{t}(q_{i})\)</span> to pochodne cząstkowe
+intensywności obrazu. Równanie to można zapisać w formie macierzowej
+jako. <span class="math notranslate nohighlight">\(\mathbf{A}v=b\)</span> gdzie:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}{\displaystyle
+        \mathbf{A}={
+        \begin{bmatrix}
+            I_{x}(q_{1})&amp;I_{y}(q_{1})\\
+            I_{x}(q_{2})&amp;I_{y}(q_{2})\\
+            \vdots &amp;\vdots \\
+            I_{x}(q_{n})&amp;I_{y}(q_{n})
+        \end{bmatrix}}
+        \quad \quad \quad
+        v={
+        \begin{bmatrix}
+            V_{x}\\
+            V_{y}
+        \end{bmatrix}
+        }\quad \quad \quad
+        b={
+        \begin{bmatrix}
+            -I_{t}(q_{1})\\
+            -I_{t}(q_{2})\\
+            \vdots \\
+            -I_{t}(q_{n})
+        \end{bmatrix}}}\end{split}\]</div>
+<p>Jest to zwykle układ nadokreślony metoda Lucas-Kanade przybliża wynik
+metodą najmniejszych kwadratów.</p>
+<div class="math notranslate nohighlight">
+\[{\mathrm  {v}}=(\mathbf{A^{T}}\mathbf{A})^{{-1}}\mathbf{A^{T}}b\]</div>
+<div class="section" id="problem-przeslony">
+<h4>Problem przesłony<a class="headerlink" href="#problem-przeslony" title="Permalink to this headline">¶</a></h4>
+<p>Metoda Lucas Kanade jest podatna na problem przesłony jest to zjawisko
+kiedy określenie kierunku ruchu nie jest możliwe na podstawie jego
+drobnego wycinka. Efekt jest zobrazowany na poniższej ilustracji.</p>
+<div class="figure align-center" id="id1">
+<img alt="problem przesłony" src="_images/aparature_efect.png" />
+<p class="caption"><span class="caption-text"><em>Ilustracja obrazująca efekt przysłony</em></span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="piramidy-i-iteracje">
+<h4>Piramidy i iteracje<a class="headerlink" href="#piramidy-i-iteracje" title="Permalink to this headline">¶</a></h4>
+<p>W literaturze można spotkać się z określeniem piramid. Jest to porostu
+metoda poprawienia działania algorytmu Lucas-Kanade poprzez obliczanie
+wektora najpierw dla obniżonej rozdzielczości. A następnie dla coraz
+większej. Ma to na celu zmniejszenie szumu i losowości w miejscach gdzie
+wyznaczenie przesunięcia nie jest możliwe. Można spodziewać się
+poprawienia trafności algorytmu stosując piramidy.</p>
+</div>
+</div>
+<div class="section" id="badanie-dzialania-algorytmow">
+<h3>Badanie działania algorytmów<a class="headerlink" href="#badanie-dzialania-algorytmow" title="Permalink to this headline">¶</a></h3>
+<p>Najprostszą miarą badającą złożoność obliczeniową są uzyskane klatki na
+sekundę. Wadą takiego pomiaru jest duży wpływ implementacji. Inne miary
+jakich planuje użyć sa empiryczne. Istnieją specjalne zestawy danych
+rzeczywistych i syntetycznych, jednak porównanie działania algorytmów na
+nich zostało już wykonane.</p>
+</div>
+<div class="section" id="dalszy-rozwoj-projektu">
+<h3>Dalszy rozwój projektu<a class="headerlink" href="#dalszy-rozwoj-projektu" title="Permalink to this headline">¶</a></h3>
+<p>Projekt może zostać rozbudowany o prostą stabilizacje obrazu. Opartą na
+wygładzaniu ruchu kamery poprzez odkształcanie obrazu.</p>
+<div class="figure align-center" id="id2">
+<img alt="diagram algorytmu" src="_images/corner_detection_flow.png" />
+<p class="caption"><span class="caption-text"><em>Diagram algorytmu</em></span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="corner_detection.html" class="btn btn-neutral float-right" title="Corner detection methods" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to Corner detection and OpticalFlow’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Dobrowolski.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
