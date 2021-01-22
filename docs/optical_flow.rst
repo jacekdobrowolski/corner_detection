@@ -1,10 +1,10 @@
 Estymacja przesunięcia śledzonych narożników
---------------------------------------------
+----------------------------------------------
 
 Lucas-Kanade
 =============
 
-Metoda Lucas-Kanade:raw-latex:`\cite{Lucas-Kanade}` jest szeroko
+Metoda Lucas-Kanade :cite:`Lucas-Kanade` jest szeroko
 stosowana w wizji komputerowej. Polega na założeniu że ruch w sąsiednich
 pixeli przebiega w jednym kierunku. Jako metoda o działaniu lokalnym nie
 radzi sobie z wyznaczaniem ruchu dla regionów o jednakowej

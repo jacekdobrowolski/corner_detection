@@ -15,13 +15,6 @@ Welcome to Corner detection and OpticalFlow's documentation!
    misc
    data_flow
    reference
+   bibliography
    :maxdepth: 2
 
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
