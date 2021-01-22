@@ -7,12 +7,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Optical Flow &mdash; Corner detection and OpticalFlow 0.1 documentation</title>
+  <title>Estymacja przesunięcia śledzonych punktów &mdash; Corner detection and OpticalFlow 0.1 documentation</title>
   
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/jupyter-sphinx.css" type="text/css" />
+  <link rel="stylesheet" href="_static/thebelab.css" type="text/css" />
 
   
   
@@ -32,6 +34,9 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/thebelab-helper.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
@@ -39,7 +44,8 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Corner detection methods" href="corner_detection.html" /> 
+    <link rel="next" title="Problem przesłony" href="misc.html" />
+    <link rel="prev" title="FAST" href="fast.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -85,12 +91,19 @@
             
             
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="specalg.html">Specyfikacja Algorytmiczna</a></li>
-<li class="toctree-l1"><a class="reference internal" href="corner_detection.html">Corner detection methods</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Optical Flow</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#lucas-kanade-method">Lucas-Kanade method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spec.html">Specyfikacja Algorytmiczna</a></li>
+<li class="toctree-l1"><a class="reference internal" href="corner_detection.html">Wykrywanie dobrych punktów do śledzenia w obrazie</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Estymacja przesunięcia śledzonych punktów</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#lucas-kanade">Lucas-Kanade</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="misc.html">Problem przesłony</a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc.html#piramidy-i-iteracje">Piramidy i iteracje</a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc.html#badanie-dzialania-algorytmow">Badanie działania algorytmów</a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc.html#dalszy-rozwoj-projektu">Dalszy rozwój projektu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_flow.html">Diagram algorytmu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Dokumentacja kodu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bibliography.html">Bibliografia</a></li>
 </ul>
 
             
@@ -139,7 +152,7 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>Optical Flow</li>
+      <li>Estymacja przesunięcia śledzonych punktów</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -158,33 +171,60 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="optical-flow">
-<h1>Optical Flow<a class="headerlink" href="#optical-flow" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="lucas-kanade-method">
-<h2>Lucas-Kanade method<a class="headerlink" href="#lucas-kanade-method" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="optical_flow.lucas_kanade">
-<code class="sig-prename descclassname">optical_flow.</code><code class="sig-name descname">lucas_kanade</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">previous</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">current</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">features</span><span class="p">:</span> <span class="n">set</span></em>, <em class="sig-param"><span class="n">window_size</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">operator</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em><span class="sig-paren">)</span><a class="headerlink" href="#optical_flow.lucas_kanade" title="Permalink to this definition">¶</a></dt>
-<dd><p>Implements Lucas Kanade method of calculating optical flow.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>previous</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code>) – previous frame.</p></li>
-<li><p><strong>current</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code>) – current frame.</p></li>
-<li><p><strong>features</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">set</span></code>) – Set of features to track.</p></li>
-<li><p><strong>window_size</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Size of window around feature,
-in which optical flow will be calculated.</p></li>
-<li><p><strong>operator</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code>) – Derivative operator like
-Scharr or Sobel.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>List of tuples containing feature coordinates and
-calculated transition vector.</p>
-</dd>
-</dl>
-</dd></dl>
-
+  <div class="section" id="estymacja-przesuniecia-sledzonych-punktow">
+<h1>Estymacja przesunięcia śledzonych punktów<a class="headerlink" href="#estymacja-przesuniecia-sledzonych-punktow" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="lucas-kanade">
+<h2>Lucas-Kanade<a class="headerlink" href="#lucas-kanade" title="Permalink to this headline">¶</a></h2>
+<p>Metoda Lucas-Kanade <span id="id1">[<a class="reference internal" href="bibliography.html#id2"><span>Lucas &amp; Kanade, 1981</span></a>]</span> jest szeroko
+stosowana w wizji komputerowej. Polega na założeniu że ruch w sąsiednich
+pixeli przebiega w jednym kierunku. Jako metoda o działaniu lokalnym nie
+radzi sobie z wyznaczaniem ruchu dla regionów o jednakowej
+intensywności. Dlatego jako dane wejściowe podajemy dobre punkty do
+śledzenia. Metoda ta zakłada również nie wielki ruch między
+poszczególnymi klatkami. Wynikają z tego pewne ograniczenia takie jak
+słabe działanie dla szybkich obiektów lub konieczność szybszego
+próbkowania obrazu. Algorytm wyznacza wektor który najlepiej opisuje
+ruch danego wycinka obrazu.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{matrix}
+            I_{x}(q_{1})V_{x}+I_{y}(q_{1})V_{y}=-I_{t}(q_{1}) \\
+            I_{x}(q_{2})V_{x}+I_{y}(q_{2})V_{y}=-I_{t}(q_{2}) \\
+            \vdots  \\
+            I_{x}(q_{n})V_{x}+I_{y}(q_{n})V_{y}=-I_{t}(q_{n}) \\
+        \end{matrix}\end{split}\]</div>
+<p>Gdzie <span class="math notranslate nohighlight">\(V_x\)</span> to współrzędna pozioma wektora ruchu regionu a
+<span class="math notranslate nohighlight">\(V_y\)</span> to współrzędna pionowa tegoż wektora.
+<span class="math notranslate nohighlight">\(q_1, q_2, \dots q_n\)</span> to pixele wewnątrz regionu. A
+<span class="math notranslate nohighlight">\(I_{x}(q_{i}),I_{y}(q_{i}),I_{t}(q_{i})\)</span> to pochodne cząstkowe
+intensywności obrazu. Równanie to można zapisać w formie macierzowej
+jako. <span class="math notranslate nohighlight">\(\mathbf{A}v=b\)</span> gdzie:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}{\displaystyle
+        \mathbf{A}={
+        \begin{bmatrix}
+            I_{x}(q_{1})&amp;I_{y}(q_{1})\\
+            I_{x}(q_{2})&amp;I_{y}(q_{2})\\
+            \vdots &amp;\vdots \\
+            I_{x}(q_{n})&amp;I_{y}(q_{n})
+        \end{bmatrix}}
+        \quad \quad \quad
+        v={
+        \begin{bmatrix}
+            V_{x}\\
+            V_{y}
+        \end{bmatrix}
+        }\quad \quad \quad
+        b={
+        \begin{bmatrix}
+            -I_{t}(q_{1})\\
+            -I_{t}(q_{2})\\
+            \vdots \\
+            -I_{t}(q_{n})
+        \end{bmatrix}}}\end{split}\]</div>
+<p>Jest to zwykle układ nadokreślony metoda Lucas-Kanade przybliża wynik
+metodą najmniejszych kwadratów.</p>
+<div class="math notranslate nohighlight">
+\[{\mathrm  {v}}=(\mathbf{A^{T}}\mathbf{A})^{{-1}}\mathbf{A^{T}}b\]</div>
 </div>
 </div>
 
@@ -194,7 +234,8 @@ calculated transition vector.</p>
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="corner_detection.html" class="btn btn-neutral float-left" title="Corner detection methods" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="misc.html" class="btn btn-neutral float-right" title="Problem przesłony" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="fast.html" class="btn btn-neutral float-left" title="FAST" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

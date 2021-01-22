@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/jupyter-sphinx.css" type="text/css" />
+  <link rel="stylesheet" href="_static/thebelab.css" type="text/css" />
 
   
   
@@ -32,6 +34,9 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/thebelab-helper.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
@@ -39,7 +44,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Specyfikacja Algorytmiczna" href="specalg.html" /> 
+    <link rel="next" title="Specyfikacja Algorytmiczna" href="spec.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -85,9 +90,16 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="specalg.html">Specyfikacja Algorytmiczna</a></li>
-<li class="toctree-l1"><a class="reference internal" href="corner_detection.html">Corner detection methods</a></li>
-<li class="toctree-l1"><a class="reference internal" href="optical_flow.html">Optical Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spec.html">Specyfikacja Algorytmiczna</a></li>
+<li class="toctree-l1"><a class="reference internal" href="corner_detection.html">Wykrywanie dobrych punktów do śledzenia w obrazie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="optical_flow.html">Estymacja przesunięcia śledzonych punktów</a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc.html">Problem przesłony</a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc.html#piramidy-i-iteracje">Piramidy i iteracje</a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc.html#badanie-dzialania-algorytmow">Badanie działania algorytmów</a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc.html#dalszy-rozwoj-projektu">Dalszy rozwój projektu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_flow.html">Diagram algorytmu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Dokumentacja kodu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bibliography.html">Bibliografia</a></li>
 </ul>
 
             
@@ -159,33 +171,32 @@
 <h1>Welcome to Corner detection and OpticalFlow’s documentation!<a class="headerlink" href="#welcome-to-corner-detection-and-opticalflow-s-documentation" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="specalg.html">Specyfikacja Algorytmiczna</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="specalg.html#funkcjonalnosc">Funkcjonalność</a></li>
-<li class="toctree-l2"><a class="reference internal" href="specalg.html#dane-wejsciowe">Dane wejściowe</a></li>
-<li class="toctree-l2"><a class="reference internal" href="specalg.html#dane-wyjsciowe">Dane wyjściowe</a></li>
-<li class="toctree-l2"><a class="reference internal" href="specalg.html#narzedzia">Narzędzia</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spec.html">Specyfikacja Algorytmiczna</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="spec.html#funkcjonalnosc">Funkcjonalność</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spec.html#dane-wejsciowe">Dane wejściowe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spec.html#dane-wyjsciowe">Dane wyjściowe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spec.html#narzedzia">Narzędzia</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="corner_detection.html">Corner detection methods</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="corner_detection.html#fast">FAST</a></li>
-<li class="toctree-l2"><a class="reference internal" href="corner_detection.html#harris">Harris</a></li>
-<li class="toctree-l2"><a class="reference internal" href="corner_detection.html#shi-tomasi">Shi-Tomasi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="corner_detection.html">Wykrywanie dobrych punktów do śledzenia w obrazie</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="harris.html">Harris-Stephens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shi_tomasi.html">Shi-Tomasi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fast.html">FAST</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="optical_flow.html">Optical Flow</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="optical_flow.html#lucas-kanade-method">Lucas-Kanade method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="optical_flow.html">Estymacja przesunięcia śledzonych punktów</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="optical_flow.html#lucas-kanade">Lucas-Kanade</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="misc.html">Problem przesłony</a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc.html#piramidy-i-iteracje">Piramidy i iteracje</a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc.html#badanie-dzialania-algorytmow">Badanie działania algorytmów</a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc.html#dalszy-rozwoj-projektu">Dalszy rozwój projektu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_flow.html">Diagram algorytmu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Dokumentacja kodu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bibliography.html">Bibliografia</a></li>
 </ul>
 </div>
-</div>
-<div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
-<ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
-</ul>
 </div>
 
 
@@ -194,7 +205,7 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="specalg.html" class="btn btn-neutral float-right" title="Specyfikacja Algorytmiczna" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="spec.html" class="btn btn-neutral float-right" title="Specyfikacja Algorytmiczna" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

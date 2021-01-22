@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Index &mdash; Corner detection and OpticalFlow 0.1 documentation</title>
+  <title>Specyfikacja Algorytmiczna &mdash; Corner detection and OpticalFlow 0.1 documentation</title>
   
 
   
@@ -42,8 +42,10 @@
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
-    <link rel="index" title="Index" href="#" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Wykrywanie dobrych punktów do śledzenia w obrazie" href="corner_detection.html" />
+    <link rel="prev" title="Welcome to Corner detection and OpticalFlow’s documentation!" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -88,8 +90,14 @@
               
             
             
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="spec.html">Specyfikacja Algorytmiczna</a></li>
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Specyfikacja Algorytmiczna</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#funkcjonalnosc">Funkcjonalność</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dane-wejsciowe">Dane wejściowe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dane-wyjsciowe">Dane wyjściowe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#narzedzia">Narzędzia</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="corner_detection.html">Wykrywanie dobrych punktów do śledzenia w obrazie</a></li>
 <li class="toctree-l1"><a class="reference internal" href="optical_flow.html">Estymacja przesunięcia śledzonych punktów</a></li>
 <li class="toctree-l1"><a class="reference internal" href="misc.html">Problem przesłony</a></li>
@@ -147,11 +155,13 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>Index</li>
+      <li>Specyfikacja Algorytmiczna</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
+          
+            <a href="_sources/spec.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -164,45 +174,49 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-
-<h1 id="index">Index</h1>
-
-<div class="genindex-jumpbox">
- <a href="#F"><strong>F</strong></a>
- | <a href="#H"><strong>H</strong></a>
- | <a href="#S"><strong>S</strong></a>
- 
+  <div class="section" id="specyfikacja-algorytmiczna">
+<h1>Specyfikacja Algorytmiczna<a class="headerlink" href="#specyfikacja-algorytmiczna" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="funkcjonalnosc">
+<h2>Funkcjonalność<a class="headerlink" href="#funkcjonalnosc" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Wykrywanie dobrych punktów do śledzenia w obrazie</p></li>
+<li><p>Odnajdowanie przesunięcia śledzonych narożników</p></li>
+</ul>
 </div>
-<h2 id="F">F</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="fast.html#corner_detection.FAST">FAST() (in module corner_detection)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="H">H</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="harris.html#corner_detection.harris">harris() (in module corner_detection)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="S">S</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="shi_tomasi.html#corner_detection.shi_tomasi">shi_tomasi() (in module corner_detection)</a>
-</li>
-  </ul></td>
-</tr></table>
-
+<div class="section" id="dane-wejsciowe">
+<h2>Dane wejściowe<a class="headerlink" href="#dane-wejsciowe" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Nagranie wideo</p></li>
+<li><p>Parametry wybierane z poziomu aplikacji</p></li>
+</ul>
+</div>
+<div class="section" id="dane-wyjsciowe">
+<h2>Dane wyjściowe<a class="headerlink" href="#dane-wyjsciowe" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Strumień wideo z naniesionymi punktami i ich wektorami ruchu</p></li>
+<li><p>Podgląd działania poszczególnych etapów przetwarzania</p></li>
+</ul>
+</div>
+<div class="section" id="narzedzia">
+<h2>Narzędzia<a class="headerlink" href="#narzedzia" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Python</p></li>
+<li><p>NumPy</p></li>
+<li><p>OpenCV</p></li>
+<li><p>Scipy</p></li>
+</ul>
+</div>
+</div>
 
 
            </div>
            
           </div>
           <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="corner_detection.html" class="btn btn-neutral float-right" title="Wykrywanie dobrych punktów do śledzenia w obrazie" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to Corner detection and OpticalFlow’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
 
   <hr/>
 

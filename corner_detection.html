@@ -7,12 +7,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Corner detection methods &mdash; Corner detection and OpticalFlow 0.1 documentation</title>
+  <title>Wykrywanie dobrych punktów do śledzenia w obrazie &mdash; Corner detection and OpticalFlow 0.1 documentation</title>
   
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/jupyter-sphinx.css" type="text/css" />
+  <link rel="stylesheet" href="_static/thebelab.css" type="text/css" />
 
   
   
@@ -32,6 +34,9 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/thebelab-helper.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
@@ -39,8 +44,8 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Optical Flow" href="optical_flow.html" />
-    <link rel="prev" title="Specyfikacja Algorytmiczna" href="specalg.html" /> 
+    <link rel="next" title="Harris-Stephens" href="harris.html" />
+    <link rel="prev" title="Specyfikacja Algorytmiczna" href="spec.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -86,14 +91,21 @@
             
             
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="specalg.html">Specyfikacja Algorytmiczna</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Corner detection methods</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#fast">FAST</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#harris">Harris</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#shi-tomasi">Shi-Tomasi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spec.html">Specyfikacja Algorytmiczna</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Wykrywanie dobrych punktów do śledzenia w obrazie</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="harris.html">Harris-Stephens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shi_tomasi.html">Shi-Tomasi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fast.html">FAST</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="optical_flow.html">Optical Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="optical_flow.html">Estymacja przesunięcia śledzonych punktów</a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc.html">Problem przesłony</a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc.html#piramidy-i-iteracje">Piramidy i iteracje</a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc.html#badanie-dzialania-algorytmow">Badanie działania algorytmów</a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc.html#dalszy-rozwoj-projektu">Dalszy rozwój projektu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_flow.html">Diagram algorytmu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Dokumentacja kodu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bibliography.html">Bibliografia</a></li>
 </ul>
 
             
@@ -142,7 +154,7 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>Corner detection methods</li>
+      <li>Wykrywanie dobrych punktów do śledzenia w obrazie</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -161,89 +173,75 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="corner-detection-methods">
-<h1>Corner detection methods<a class="headerlink" href="#corner-detection-methods" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="fast">
-<h2>FAST<a class="headerlink" href="#fast" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="corner_detection.FAST">
-<code class="sig-prename descclassname">corner_detection.</code><code class="sig-name descname">FAST</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">radius</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">threshold</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">n</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span><a class="headerlink" href="#corner_detection.FAST" title="Permalink to this definition">¶</a></dt>
-<dd><p>Finds good corners in grayscale image, using FAST method.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>image</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code>) – Grayscale image in form of 2 dimensional
-<code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code></p></li>
-<li><p><strong>radius</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Radius of a ring around candidate corner.
-Must be greater or equals to 1.</p></li>
-<li><p><strong>threshold</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Threshold value.</p></li>
-<li><p><strong>n</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Fraction of pixels on ring around candidate corner
-with absolute value difference greater than threshold.
-Must be between 0 and 1.</p></li>
+  <div class="section" id="wykrywanie-dobrych-punktow-do-sledzenia-w-obrazie">
+<h1>Wykrywanie dobrych punktów do śledzenia w obrazie<a class="headerlink" href="#wykrywanie-dobrych-punktow-do-sledzenia-w-obrazie" title="Permalink to this headline">¶</a></h1>
+<p>Do wykrywania narożników w obrazie można wykorzystać różne metody.
+Najbardziej popularne są Harrisa-Stephens <span id="id1">[<a class="reference internal" href="bibliography.html#id5"><span>Harris et al., 1988</span></a>]</span> i
+Shi-Tomasi <span id="id2">[<a class="reference internal" href="bibliography.html#id4"><span>Shi &amp; Tomasi, 1994</span></a>]</span>, są one do siebie podobnę i
+część algorytmu jest wspólna. Obie metody zakładają że narożnik to punkt
+obrazu w którym intensywność zmienia się w więcej niż dwóch kierunkach.
+Zmiana w jednym kierunku oznacza krawędź. Niech <span class="math notranslate nohighlight">\(I(x, y)\)</span> równa
+się intensywności pixela o koordynatach x i y. <span class="math notranslate nohighlight">\(I(x + u, y + v)\)</span>
+równa się intensywności pixela odległego o u i v od poprzedniego.
+Narożnik znajdzie się się więc w punkcie gdzie suma kwadratów różnic
+między tymi wartościami będzie największa. Co można zapisać jako</p>
+<div class="math notranslate nohighlight">
+\[S(x,y) = \Sigma_{u}\Sigma_{v}w(u, v)[I(x + u, y + v) - I(x, y)]^2\]</div>
+<p>gdzie <span class="math notranslate nohighlight">\(w(u, v)\)</span> to funkcja okna przesuwanego po obrazie,
+zwracająca wartość jeden dla małego obszaru i zero dla reszty. Obszarem
+do zbadania jest działanie innych okien okrągłych, niebinarnych. To
+równanie możemy przybliżyć wielomianem korzystając z twierdzenia
+Taylora. Niech <span class="math notranslate nohighlight">\(I_x\)</span> i <span class="math notranslate nohighlight">\(I_y\)</span> będą pochodnymi <span class="math notranslate nohighlight">\(I\)</span> tak
+aby <span class="math notranslate nohighlight">\(I(x + u, y + v) \approx I(u, v) + I_x(u, v)x + I_y(u, v)y\)</span>
+Daje to wielomian</p>
+<div class="math notranslate nohighlight">
+\[S(x, y) \approx \Sigma_u \Sigma_v w(u, v)(I_x(u, v)x+I_y(u,v)y)^2\]</div>
+<p>Zapisane w formie macierzowej:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}S(x, y) \approx
+        \begin{pmatrix}
+            x &amp; y
+        \end{pmatrix}
+        \mathbf{A}
+        \begin{pmatrix}
+            x \\
+            y \\
+        \end{pmatrix}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}{\displaystyle
+    A=\sum _{u}\sum _{v}w(u,v){
+        \begin{bmatrix}
+            I_{x}(u,v)^{2}&amp;I_{x}(u,v)I_{y}(u,v)\\
+            I_{x}(u,v)I_{y}(u,v)&amp;I_{y}(u,v)^{2}
+        \end{bmatrix}}={
+        \begin{bmatrix}
+            \langle I_{x}^{2}\rangle &amp;\langle I_{x}I_{y}\rangle \\
+            \langle I_{x}I_{y}\rangle &amp;\langle I_{y}^{2}\rangle
+        \end{bmatrix}}
+    }\end{split}\]</div>
+<p>Poprzez analizę wartości własnych macierzy <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> można
+znaleźć narożniki.</p>
+<ul class="simple">
+<li><p>Obie wartości są bliskie zeru dany pixel nie ma dobrych punktów do
+śledzenia</p></li>
+<li><p>Jedna z wartości własnych jest bliska zeru a druga ma duża wartość
+dany pixel znajduje się na krawędzi</p></li>
+<li><p>Obie wartości własne mają duże dodatnie wartości dany pixel jest
+narożnikiem</p></li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Set of tuples containing indexes of good corners</p>
-</dd>
-</dl>
-</dd></dl>
-
-</div>
-<div class="section" id="harris">
-<h2>Harris<a class="headerlink" href="#harris" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="corner_detection.harris">
-<code class="sig-prename descclassname">corner_detection.</code><code class="sig-name descname">harris</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">operator</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">window</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">k</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span><a class="headerlink" href="#corner_detection.harris" title="Permalink to this definition">¶</a></dt>
-<dd><p>Harris method implementation</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>image</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code>) – Image in which corners are to be found.</p></li>
-<li><p><strong>operator</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code>) – Operator used for approximating
-image derivatives. For example: <code class="xref py py-class docutils literal notranslate"><span class="pre">filter_kernels.SOBEL</span></code>
-<code class="xref py py-class docutils literal notranslate"><span class="pre">filter_kernels.SCHARR</span></code></p></li>
-<li><p><strong>window</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code>) – Window</p></li>
-<li><p><strong>k</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Constant determining algorithm sensitivity,
-usually  beetwen 0.04 and 0.15</p></li>
+<p>W tym punkcie metody Harrisa i Shi-Tomasi zaczynają się różnić.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="harris.html">Harris-Stephens</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shi_tomasi.html">Shi-Tomasi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fast.html">FAST</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fast.html#dzialanie-dla-roznych-wartosci-promienia">Działanie dla różnych wartości promienia:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fast.html#dzialanie-dla-innych-wartosci-progu">Działanie dla innych wartości progu:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fast.html#dzialanie-dla-roznych-wartosci-n">Działanie dla różnych wartości n:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fast.html#dzialanie-na-przykladowych-obrazach">Działanie na przykładowych obrazach:</a></li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">image</span></code> sized array containing value
-coresponding to how good of a corner a given pixel is.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
-</div>
-<div class="section" id="shi-tomasi">
-<h2>Shi-Tomasi<a class="headerlink" href="#shi-tomasi" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="corner_detection.shi_tomasi">
-<code class="sig-prename descclassname">corner_detection.</code><code class="sig-name descname">shi_tomasi</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">operator</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">window</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em><span class="sig-paren">)</span><a class="headerlink" href="#corner_detection.shi_tomasi" title="Permalink to this definition">¶</a></dt>
-<dd><p>Shi-Tomasi method implementation</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>image</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code>) – Image in which corners are to be found.</p></li>
-<li><p><strong>operator</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code>) – Operator used for approximating
-image derivatives. For example: <code class="xref py py-class docutils literal notranslate"><span class="pre">filter_kernels.SOBEL</span></code>
-<code class="xref py py-class docutils literal notranslate"><span class="pre">filter_kernels.SCHARR</span></code></p></li>
-<li><p><strong>window</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code>) – Window</p></li>
+</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">image</span></code> sized array containing value
-coresponding to how good of a corner a given pixel is.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
 </div>
 </div>
 
@@ -253,8 +251,8 @@ coresponding to how good of a corner a given pixel is.</p>
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="optical_flow.html" class="btn btn-neutral float-right" title="Optical Flow" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="specalg.html" class="btn btn-neutral float-left" title="Specyfikacja Algorytmiczna" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="harris.html" class="btn btn-neutral float-right" title="Harris-Stephens" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="spec.html" class="btn btn-neutral float-left" title="Specyfikacja Algorytmiczna" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
