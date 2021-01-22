@@ -9,9 +9,12 @@ Welcome to Corner detection and OpticalFlow's documentation!
 
 
 .. toctree::
-   specalg
+   spec
    corner_detection
    optical_flow
+   misc
+   data_flow
+   reference
    :maxdepth: 2
 
 
