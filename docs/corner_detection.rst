@@ -64,34 +64,10 @@ znaleźć narożniki.
 -  Obie wartości własne mają duże dodatnie wartości dany pixel jest
    narożnikiem
 
-W tym punkcie metody zaczynają się różnić.
+W tym punkcie metody Harrisa i Shi-Tomasi zaczynają się różnić.
 
-Harris-Stephens
-~~~~~~~~~~~~~~~
 
-Jako że wyznaczanie wartości własnych macierzy jest złożone
-obliczeniowo. Dlatego stosuje funkcje :math:`M_c`
-
-.. math::
-
-   M_c = \lambda_1 \lambda_2 - \kappa \, (\lambda_1 + \lambda_2)^2
-               = \operatorname{det}(A) - \kappa \, \operatorname{trace}^2(A)
-
-Gdzie :math:`\kappa` to stała wyznaczana empirycznie, która odpowiada sa
-czułość algorytmu. W literaturze można się spotkać z wartościami między
-:math:`0.04` do :math:`0.15`.
-
-Shi-Tomasi
-~~~~~~~~~~
-
-Metoda Shi-Tomasi bezpośrednio wyznacza :math:`min(\lambda_1, lambda_2)`
-Co daje nieco lesze wyniki kosztem złożoności obliczeniowej.
-
-Metoda FAST
-~~~~~~~~~~~
-
-Metoda FAST (Features from accelerated segment
-test) :cite:`FAST` polega na znalezieniu punktów dla których
-w danym promieniu. Znaczna część pixeli różni się od centralnego pixela
-o wartość progu detekcji. Zaletą tej metody jest niska złożoność
-obliczeniowa. Algorytm ten ma 3 parametry które można zbadać.
+.. toctree::
+    harris
+    shi_tomasi
+    fast

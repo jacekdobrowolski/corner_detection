@@ -7,7 +7,6 @@ Welcome to Corner detection and OpticalFlow's documentation!
 ============================================================
 
 
-
 .. toctree::
    spec
    corner_detection

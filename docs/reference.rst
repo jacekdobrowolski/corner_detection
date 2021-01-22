@@ -1,29 +1,29 @@
 Dokumentacja kodu
 ================================
 
-Corner detection
-----------------------------
+.. Corner detection
+.. ----------------------------
 
-.. currentmodule:: corner_detection
+.. .. currentmodule:: corner_detection
 
-FAST
+.. FAST
 
-.. autofunction:: FAST
+.. .. autofunction:: FAST
 
-Harris
+.. Harris
 
-.. autofunction:: harris
+.. .. autofunction:: harris
 
-Shi-Tomasi
+.. Shi-Tomasi
 
-.. autofunction:: shi_tomasi
+.. .. autofunction:: shi_tomasi
 
 
-Optical Flow
----------------------------
+.. Optical Flow
+.. ---------------------------
 
-.. currentmodule:: optical_flow
+.. .. currentmodule:: optical_flow
 
-Lucas-Kanade
+.. Lucas-Kanade
 
-.. autofunction:: lucas_kanade
+.. .. autofunction:: lucas_kanade

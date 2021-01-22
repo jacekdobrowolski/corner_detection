@@ -1,4 +1,4 @@
-Estymacja przesunięcia śledzonych narożników
+Estymacja przesunięcia śledzonych punktów
 ----------------------------------------------
 
 Lucas-Kanade

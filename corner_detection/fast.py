@@ -50,20 +50,20 @@ def _generate_ring(radius: int):
 
 
 def FAST(image: np.ndarray, radius: int, threshold: int, n: float):
-    """Finds good corners in grayscale image, using FAST method.
+    """Znajduje dobre narożniki w białoczarnym obrazie metodą FAST
 
     Args:
-        image (:class:`np.ndarray`): Grayscale image in form of 2 dimensional
-                                                            :class:`np.ndarray`
-        radius (:class:`int`): Radius of a ring around candidate corner.
-                                    Must be greater or equals to 1.
-        threshold (:class:`int`): Threshold value.
-        n (:class:`int`): Fraction of pixels on ring around candidate corner
-            with absolute value difference greater than threshold.
-            Must be between 0 and 1.
+        image (:class:`np.ndarray`): Białoczarny obraz w postaci 2 wymiarowej
+            :class:`np.ndarray`
+        radius (:class:`int`): Promień pierścienia wokół kandydującego
+            piksela. Musi być równy lub większy niż 1.
+        threshold (:class:`int`): Wartość progowa różnicy w jasności.
+        n (:class:`int`): Część pikseli z pierścienia, o różnicy wartości
+            jasności z pikselem kandudującym, wymagana do rozpoznania
+            narożnika. Musi być między 0 a 1.
 
     Returns:
-        Set of tuples containing indexes of good corners
+        :class:`set` Zwraca zbiór par kordynatów znalezionych narożników.
     """
     assert isinstance(image, np.ndarray) and image.ndim == 2, \
         'image must be grayscale image, np.ndarray'
