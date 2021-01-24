@@ -29,9 +29,3 @@ sekundę. Wadą takiego pomiaru jest duży wpływ implementacji. Inne miary
 jakich planuje użyć sa empiryczne. Istnieją specjalne zestawy danych
 rzeczywistych i syntetycznych, jednak porównanie działania algorytmów na
 nich zostało już wykonane.
-
-Dalszy rozwój projektu
-===============================
-
-Projekt może zostać rozbudowany o prostą stabilizacje obrazu. Opartą na
-wygładzaniu ruchu kamery poprzez odkształcanie obrazu.

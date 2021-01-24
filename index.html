@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Welcome to Corner detection and OpticalFlow’s documentation! &mdash; Corner detection and OpticalFlow 0.1 documentation</title>
+  <title>Dokumentacja Projektu &mdash; Corner detection and OpticalFlow 0.1 documentation</title>
   
 
   
@@ -44,7 +44,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Specyfikacja Algorytmiczna" href="spec.html" /> 
+    <link rel="next" title="Wykrywanie dobrych punktów do śledzenia w obrazie" href="corner_detection.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -90,15 +90,12 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="spec.html">Specyfikacja Algorytmiczna</a></li>
 <li class="toctree-l1"><a class="reference internal" href="corner_detection.html">Wykrywanie dobrych punktów do śledzenia w obrazie</a></li>
 <li class="toctree-l1"><a class="reference internal" href="optical_flow.html">Estymacja przesunięcia śledzonych punktów</a></li>
 <li class="toctree-l1"><a class="reference internal" href="misc.html">Problem przesłony</a></li>
 <li class="toctree-l1"><a class="reference internal" href="misc.html#piramidy-i-iteracje">Piramidy i iteracje</a></li>
 <li class="toctree-l1"><a class="reference internal" href="misc.html#badanie-dzialania-algorytmow">Badanie działania algorytmów</a></li>
-<li class="toctree-l1"><a class="reference internal" href="misc.html#dalszy-rozwoj-projektu">Dalszy rozwój projektu</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_flow.html">Diagram algorytmu</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reference.html">Dokumentacja kodu</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bibliography.html">Bibliografia</a></li>
 </ul>
 
@@ -148,7 +145,7 @@
     
       <li><a href="#" class="icon icon-home"></a> &raquo;</li>
         
-      <li>Welcome to Corner detection and OpticalFlow’s documentation!</li>
+      <li>Dokumentacja Projektu</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -167,17 +164,76 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="welcome-to-corner-detection-and-opticalflow-s-documentation">
-<h1>Welcome to Corner detection and OpticalFlow’s documentation!<a class="headerlink" href="#welcome-to-corner-detection-and-opticalflow-s-documentation" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="dokumentacja-projektu">
+<h1>Dokumentacja Projektu<a class="headerlink" href="#dokumentacja-projektu" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="wstep">
+<h2>Wstęp<a class="headerlink" href="#wstep" title="Permalink to this headline">¶</a></h2>
+<p>Początkowo projekt miał być aplikacją nanoszącą rezultat pracy algorytmu optical flow na strumień wideo.
+Jednak wraz z postępem projektu okazalo się że taki projekt z początkowymi założeniami mógł by działać
+(bez nadmiernej pracy) jedynie na systemie linux. Dodatkowo prosta implementacja algorytmu nie dała by
+sobie rady z liczbą klatek na sekundę jakie są wymagane od płynnego odtwazania wideo.
+Dlatego na pewnym etapie zdecydowałem że projekt będzie implementacją 3 algorytmów wykrywających narożniki
+i algorytmu optical flow metodą Lucas Kanade. Wyposarzoną w dokumentację prezentującą ich działanie dla różnych
+parametrów i obrazów.</p>
+</div>
+<div class="section" id="funkcjonalnosc">
+<h2>Funkcjonalność<a class="headerlink" href="#funkcjonalnosc" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Wykrywanie dobrych punktów do śledzenia w obrazie</p></li>
+<li><p>Odnajdowanie przesunięcia śledzonych narożników</p></li>
+</ul>
+</div>
+<div class="section" id="dane-wejsciowe">
+<h2>Dane wejściowe<a class="headerlink" href="#dane-wejsciowe" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Klatki nagrania</p></li>
+<li><p>Parametry wejścowe algorytmów</p></li>
+</ul>
+</div>
+<div class="section" id="narzedzia">
+<h2>Narzędzia<a class="headerlink" href="#narzedzia" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p>Python</p></li>
+<li><p>NumPy</p></li>
+<li><p>OpenCV</p></li>
+<li><p>Scipy</p>
+<p>Początkowo biblioteka Scipy nie znalazła się w wykazie.
+Okazało się jednak że jest tam niezbędna implementacja splotu dwuwymiarowego.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="co-zostalo-zrobione-w-ramach-projektu">
+<h2>Co zostało zrobione w ramach projektu<a class="headerlink" href="#co-zostalo-zrobione-w-ramach-projektu" title="Permalink to this headline">¶</a></h2>
+<p>W ramach projektu zaimplementowane zostały 3 algorytmy wykrywania krawędzi.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Shi-Tomasi <span id="id1">[<a class="reference internal" href="bibliography.html#id4"><span>Shi &amp; Tomasi, 1994</span></a>]</span></p></li>
+<li><p>Harris-Stephens <span id="id2">[<a class="reference internal" href="bibliography.html#id5"><span>Harris et al., 1988</span></a>]</span></p></li>
+<li><p>FAST <span id="id3">[<a class="reference internal" href="bibliography.html#id6"><span>Rosten &amp; Drummond, 2006</span></a>]</span></p></li>
+</ul>
+</div></blockquote>
+<p>Oraz zaimplementowana została metoda Lucas-Kanade <span id="id4">[<a class="reference internal" href="bibliography.html#id2"><span>Lucas &amp; Kanade, 1981</span></a>]</span>
+służąca do wyznaczania przesunięcia się fragmentów obrazu.</p>
+<p>Projekt w obecnym stanie może zostac użyty jako moduł języka Python.
+Jego działanie i sposób użycia można jednak zobaczyć w dalszej części dokumentacji.</p>
+</div>
+<div class="section" id="dalszy-rozwoj">
+<h2>Dalszy rozwój<a class="headerlink" href="#dalszy-rozwoj" title="Permalink to this headline">¶</a></h2>
+<p>Projekt może zostać rozbudowany o prostą stabilizacje obrazu. Opartą na
+wygładzaniu ruchu kamery poprzez odkształcanie obrazu.</p>
+<p>Stworzona implementacja jest powolna i raczej nie nadaje się do użytku poza nauką.
+Można jednak znacznie poprawić jego działanie poprzez optymalizację lub użycie kilku
+procesów w kluczowych częściach.</p>
+</div>
+<div class="section" id="co-nie-zostalo-wykonane">
+<h2>Co nie zostało wykonane<a class="headerlink" href="#co-nie-zostalo-wykonane" title="Permalink to this headline">¶</a></h2>
+<p>Implementacja Lucas Kanade jest niezbyt dobra poniważ nie wykorzystuje metody piramid.
+A jej wynik działania nie są zbyt zadowalające.</p>
+</div>
+<div class="section" id="dokumentacja">
+<h2>Dokumentacja<a class="headerlink" href="#dokumentacja" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="spec.html">Specyfikacja Algorytmiczna</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="spec.html#funkcjonalnosc">Funkcjonalność</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spec.html#dane-wejsciowe">Dane wejściowe</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spec.html#dane-wyjsciowe">Dane wyjściowe</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spec.html#narzedzia">Narzędzia</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="corner_detection.html">Wykrywanie dobrych punktów do śledzenia w obrazie</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="harris.html">Harris-Stephens</a></li>
 <li class="toctree-l2"><a class="reference internal" href="shi_tomasi.html">Shi-Tomasi</a></li>
@@ -191,11 +247,10 @@
 <li class="toctree-l1"><a class="reference internal" href="misc.html">Problem przesłony</a></li>
 <li class="toctree-l1"><a class="reference internal" href="misc.html#piramidy-i-iteracje">Piramidy i iteracje</a></li>
 <li class="toctree-l1"><a class="reference internal" href="misc.html#badanie-dzialania-algorytmow">Badanie działania algorytmów</a></li>
-<li class="toctree-l1"><a class="reference internal" href="misc.html#dalszy-rozwoj-projektu">Dalszy rozwój projektu</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_flow.html">Diagram algorytmu</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reference.html">Dokumentacja kodu</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bibliography.html">Bibliografia</a></li>
 </ul>
+</div>
 </div>
 </div>
 
@@ -205,7 +260,7 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="spec.html" class="btn btn-neutral float-right" title="Specyfikacja Algorytmiczna" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="corner_detection.html" class="btn btn-neutral float-right" title="Wykrywanie dobrych punktów do śledzenia w obrazie" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

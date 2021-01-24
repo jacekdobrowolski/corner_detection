@@ -68,6 +68,8 @@ W tym punkcie metody Harrisa i Shi-Tomasi zaczynają się różnić.
 
 
 .. toctree::
+    :maxdepth: 1
+    
     harris
     shi_tomasi
     fast

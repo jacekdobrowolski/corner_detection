@@ -91,7 +91,6 @@
             
             
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="spec.html">Specyfikacja Algorytmiczna</a></li>
 <li class="toctree-l1"><a class="reference internal" href="corner_detection.html">Wykrywanie dobrych punktów do śledzenia w obrazie</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Estymacja przesunięcia śledzonych punktów</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#lucas-kanade">Lucas-Kanade</a></li>
@@ -100,9 +99,7 @@
 <li class="toctree-l1"><a class="reference internal" href="misc.html">Problem przesłony</a></li>
 <li class="toctree-l1"><a class="reference internal" href="misc.html#piramidy-i-iteracje">Piramidy i iteracje</a></li>
 <li class="toctree-l1"><a class="reference internal" href="misc.html#badanie-dzialania-algorytmow">Badanie działania algorytmów</a></li>
-<li class="toctree-l1"><a class="reference internal" href="misc.html#dalszy-rozwoj-projektu">Dalszy rozwój projektu</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_flow.html">Diagram algorytmu</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reference.html">Dokumentacja kodu</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bibliography.html">Bibliografia</a></li>
 </ul>
 
@@ -225,6 +222,100 @@ jako. <span class="math notranslate nohighlight">\(\mathbf{A}v=b\)</span> gdzie:
 metodą najmniejszych kwadratów.</p>
 <div class="math notranslate nohighlight">
 \[{\mathrm  {v}}=(\mathbf{A^{T}}\mathbf{A})^{{-1}}\mathbf{A^{T}}b\]</div>
+<dl class="py function">
+<dt id="optical_flow.lucas_kanade">
+<code class="sig-prename descclassname">optical_flow.</code><code class="sig-name descname">lucas_kanade</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">previous</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">current</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">features</span><span class="p">:</span> <span class="n">set</span></em>, <em class="sig-param"><span class="n">window_size</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">operator</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em><span class="sig-paren">)</span><a class="headerlink" href="#optical_flow.lucas_kanade" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementuje metodę Lucas Kanade</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>previous</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code>) – Poprzednia białoczarna klatka</p></li>
+<li><p><strong>current</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code>) – Obecna białoczarna klatka</p></li>
+<li><p><strong>features</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">set</span></code>) – Zbiór punktów do śledzenia</p></li>
+<li><p><strong>window_size</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Rozmiar okna w którym znaleziono punkt.</p></li>
+<li><p><strong>operator</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code>) – Operator służący do wyznaczania
+pochodnych obrazu.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">set</span></code> <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code> Kordynaty punktu i wektor u, v.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>Najpierw należy wczytać dopowiednie moduły oraz klatki obrazu.</p>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">cd</span> <span class="o">..</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/tra/tra
+</pre></div>
+</div>
+</div>
+</div>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">corner_detection</span>
+<span class="kn">import</span> <span class="nn">optical_flow</span>
+
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">sample_path</span> <span class="o">=</span> <span class="s1">&#39;datasets/Hydrangea&#39;</span>
+
+<span class="n">prev_color</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">sample_path</span> <span class="o">+</span> <span class="s1">&#39;/frame10.png&#39;</span><span class="p">)</span>
+<span class="n">prev_color</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">prev_color</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2RGB</span><span class="p">)</span>
+<span class="n">prev</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">prev_color</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_RGB2GRAY</span><span class="p">)</span>
+
+<span class="n">curr_color</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">sample_path</span> <span class="o">+</span> <span class="s1">&#39;/frame11.png&#39;</span><span class="p">)</span>
+<span class="n">curr_color</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">curr_color</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2RGB</span><span class="p">)</span>
+<span class="n">curr</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">curr_color</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_RGB2GRAY</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">prev_color</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">curr_color</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/optical_flow_1_0.png" src="_images/optical_flow_1_0.png" />
+</div>
+</div>
+<p>Następnie należy w obrazie wykryć narożniki. W tym przykładzie posłuże się metodą Shi-Tomasi.</p>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">window</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+<span class="n">corners</span> <span class="o">=</span> <span class="n">corner_detection</span><span class="o">.</span><span class="n">shi_tomasi</span><span class="p">(</span><span class="n">prev</span><span class="p">,</span> <span class="n">corner_detection</span><span class="o">.</span><span class="n">SCHARR</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">corner_detection</span><span class="o">.</span><span class="n">draw_corners</span><span class="p">(</span><span class="n">prev_color</span><span class="p">,</span> <span class="n">corners</span><span class="p">)),</span> <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/optical_flow_2_0.png" src="_images/optical_flow_2_0.png" />
+</div>
+</div>
+<p>Następnie wykryte punkty należy przekazać do funkcji lucas_kanade wraz dwiema sąsiednimi klatkami.</p>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">flow</span> <span class="o">=</span> <span class="n">optical_flow</span><span class="o">.</span><span class="n">lucas_kanade</span><span class="p">(</span><span class="n">prev</span><span class="p">,</span> <span class="n">curr</span><span class="p">,</span> <span class="n">corners</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="n">corner_detection</span><span class="o">.</span><span class="n">SCHARR</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">flow</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">feature</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">feature</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">cv2</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">prev_color</span><span class="p">,</span> <span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">feature</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="mi">200</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">feature</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="mi">200</span><span class="p">)),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">255</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">prev_color</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/optical_flow_3_0.png" src="_images/optical_flow_3_0.png" />
+</div>
+</div>
+<p>Linie odpowiadają ruchowi klatek.</p>
 </div>
 </div>
 
