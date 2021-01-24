@@ -4,20 +4,18 @@ import scipy.signal
 
 def lucas_kanade(previous: np.ndarray, current: np.ndarray,
                  features: set, window_size: int, operator: np.ndarray):
-    """Implements Lucas Kanade method of calculating optical flow.
+    """Implementuje metodę Lucas Kanade
 
     Args:
-        previous (:class:`np.ndarray`): previous frame.
-        current (:class:`np.ndarray`): current frame.
-        features (:class:`set`): Set of features to track.
-        window_size (:class:`int`): Size of window around feature,
-            in which optical flow will be calculated.
-        operator (:class:`np.ndarray`): Derivative operator like
-            Scharr or Sobel.
+        previous (:class:`np.ndarray`): Poprzednia białoczarna klatka
+        current (:class:`np.ndarray`): Obecna białoczarna klatka
+        features (:class:`set`): Zbiór punktów do śledzenia
+        window_size (:class:`int`): Rozmiar okna w którym znaleziono punkt.
+        operator (:class:`np.ndarray`): Operator służący do wyznaczania
+            pochodnych obrazu.
 
     Returns:
-        List of tuples containing feature coordinates and
-        calculated transition vector.
+        :class:`set` :class:`tuple` Kordynaty punktu i wektor u, v.
     """
     assert window_size % 2 == 1, 'window_size must be odd'
     assert isinstance(previous, np.ndarray) and previous.ndim == 2, \
@@ -27,11 +25,12 @@ def lucas_kanade(previous: np.ndarray, current: np.ndarray,
     window_radius = int((window_size - 1) / 2 + (operator.shape[0] - 1) / 2)
     result = list()
 
-    for x, y in features:
-        current_window = current[x-window_radius:x + window_radius,
-                                 y-window_radius:y + window_radius]
-        previous_window = previous[x-window_radius:x + window_radius,
-                                   y-window_radius:y + window_radius]
+    for y, x in features:
+        current_window = current[x - window_radius: x + window_radius,
+                                 y - window_radius: y + window_radius]
+        previous_window = previous[x - window_radius: x + window_radius,
+                                   y - window_radius: y + window_radius]
+
         Ix = scipy.signal.convolve2d(current_window,
                                      operator, mode='valid')
         Iy = scipy.signal.convolve2d(current_window,
@@ -40,6 +39,6 @@ def lucas_kanade(previous: np.ndarray, current: np.ndarray,
         It = It[1:-1, 1:-1].flatten()
         A = np.stack((Ix.flatten(), Iy.flatten()), axis=1)
 
-        result.append((x, y, *np.linalg.lstsq(A, It)[0]))
+        result.append((x, y, *np.linalg.lstsq(A, It, rcond=None)[0]))
 
     return result
